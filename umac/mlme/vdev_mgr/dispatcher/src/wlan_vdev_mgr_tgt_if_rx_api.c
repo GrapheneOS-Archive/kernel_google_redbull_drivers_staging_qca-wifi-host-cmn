@@ -34,6 +34,11 @@ tgt_vdev_mgr_get_response_timer_info(struct wlan_objmgr_vdev *vdev)
 {
 	struct vdev_mlme_obj *vdev_mlme;
 
+	if (wlan_vdev_get_id(vdev) >= WLAN_UMAC_PSOC_MAX_VDEVS) {
+		mlme_err("Incorrect vdev_id: %d", wlan_vdev_get_id(vdev));
+		return NULL;
+	}
+
 	vdev_mlme = wlan_vdev_mlme_get_cmpt_obj(vdev);
 	if (!vdev_mlme) {
 		mlme_err("VDEV_%d: VDEV_MLME is NULL", wlan_vdev_get_id(vdev));
